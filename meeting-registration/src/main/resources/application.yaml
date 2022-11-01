@@ -1,0 +1,24 @@
+server:
+  port: ${PORT:5000}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://application.yaml/yqsgryvr
+    username: yqsgryvr
+    password: vwfQfq5f_CP8HR9KCc9A2e8dvJg-yzLY
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+  liquibase:
+    enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+logging:
+  level:
+    org:
+      springframework: INFO
