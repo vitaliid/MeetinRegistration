@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://application.yaml/yqsgryvr
+    url: jdbc:postgresql://lucky.db.elephantsql.com/yqsgryvr
     username: yqsgryvr
     password: vwfQfq5f_CP8HR9KCc9A2e8dvJg-yzLY
     hikari:
