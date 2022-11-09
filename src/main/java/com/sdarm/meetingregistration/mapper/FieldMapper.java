@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface FieldMapper {
 
-    Field toEntity(FieldResponse response);
+    FieldResponse toDto(Field domain);
 
 }
