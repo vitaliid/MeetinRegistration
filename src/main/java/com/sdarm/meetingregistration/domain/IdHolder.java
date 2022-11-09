@@ -15,6 +15,6 @@ import javax.persistence.*;
 public abstract class IdHolder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "uuid")
+    @Column(name = "id")
     protected String uuid;
 }
