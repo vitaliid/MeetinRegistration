@@ -16,5 +16,5 @@ public abstract class IdHolder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected String uuid;
+    protected String id;
 }
