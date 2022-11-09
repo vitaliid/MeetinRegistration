@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "user")
-public class User extends IdHolder {
+public class Participant extends IdHolder {
 
     private String name;
 
