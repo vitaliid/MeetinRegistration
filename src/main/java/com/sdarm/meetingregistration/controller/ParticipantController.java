@@ -2,7 +2,6 @@ package com.sdarm.meetingregistration.controller;
 
 import com.sdarm.meetingregistration.dto.participant.ParticipantCreateRequest;
 import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
-import com.sdarm.meetingregistration.dto.participant.ParticipantUpdateRequest;
 import com.sdarm.meetingregistration.facade.ParticipantFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,13 +40,6 @@ public class ParticipantController {
         log.info("Create participant");
 
         return participantFacade.create(request);
-    }
-
-    @PutMapping
-    public ParticipantResponse update(@RequestBody ParticipantUpdateRequest request) {
-        log.info("Update participant with id {}", request.getId());
-
-        return participantFacade.update(request);
     }
 
     @DeleteMapping("{id}")

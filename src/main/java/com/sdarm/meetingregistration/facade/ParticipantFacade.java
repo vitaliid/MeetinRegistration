@@ -6,7 +6,6 @@ import com.sdarm.meetingregistration.domain.Participant;
 import com.sdarm.meetingregistration.domain.Payment;
 import com.sdarm.meetingregistration.dto.participant.ParticipantCreateRequest;
 import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
-import com.sdarm.meetingregistration.dto.participant.ParticipantUpdateRequest;
 import com.sdarm.meetingregistration.mapper.ParticipantMapper;
 import com.sdarm.meetingregistration.service.AddressService;
 import com.sdarm.meetingregistration.service.FieldService;
@@ -56,15 +55,6 @@ public class ParticipantFacade {
         participant.setPayment(payment);
 
         Participant created = participantService.create(participant);
-        return participantMapper.toDto(created);
-    }
-
-    public ParticipantResponse update(ParticipantUpdateRequest request) {
-        Participant participant = participantMapper.toEntity(request);
-
-        //TODO finalize
-
-        Participant created = participantService.update(participant);
         return participantMapper.toDto(created);
     }
 
