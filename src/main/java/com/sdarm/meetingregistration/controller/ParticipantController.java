@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/registration/participants")
-@OpenAPIDefinition(tags = {@Tag(name = "logistics"), @Tag(name = "assets")})
+@OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "participants")})
 @Slf4j
 @RequiredArgsConstructor
 public class ParticipantController {

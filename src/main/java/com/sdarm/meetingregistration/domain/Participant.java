@@ -1,6 +1,6 @@
 package com.sdarm.meetingregistration.domain;
 
-import com.sdarm.meetingregistration.enums.UserGender;
+import com.sdarm.meetingregistration.enums.ParticipantGender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class Participant extends IdHolder {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    private UserGender gender;
+    private ParticipantGender gender;
 
     private String minister;
 

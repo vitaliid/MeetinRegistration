@@ -1,7 +1,7 @@
 package com.sdarm.meetingregistration.controller;
 
-import com.sdarm.meetingregistration.dto.field.FieldResponse;
-import com.sdarm.meetingregistration.facade.FieldFacade;
+import com.sdarm.meetingregistration.dto.apartment.ApartmentResponse;
+import com.sdarm.meetingregistration.facade.ApartmentFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/registration/fields")
-@OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "fields")})
+@RequestMapping("api/registration/apartments")
+@OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "apartments")})
 @Slf4j
 @RequiredArgsConstructor
-public class FieldController {
+public class ApartmentController {
 
-    private final FieldFacade fieldFacade;
+    private final ApartmentFacade apartmentFacade;
 
     @GetMapping
-    public List<FieldResponse> get() {
-        log.info("Get all fields");
+    public List<ApartmentResponse> getAll() {
+        log.info("Get all apartments");
 
-        return fieldFacade.getAll();
+        return apartmentFacade.getAll();
     }
 }

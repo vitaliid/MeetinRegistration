@@ -1,5 +1,5 @@
 package com.sdarm.meetingregistration.enums;
 
-public enum UserGender {
+public enum ParticipantGender {
     MALE, FEMALE
 }

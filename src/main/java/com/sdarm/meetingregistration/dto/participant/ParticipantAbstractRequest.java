@@ -1,6 +1,6 @@
 package com.sdarm.meetingregistration.dto.participant;
 
-import com.sdarm.meetingregistration.enums.UserGender;
+import com.sdarm.meetingregistration.enums.ParticipantGender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ public abstract class ParticipantAbstractRequest {
 
     private String email;
 
-    private UserGender gender;
+    private ParticipantGender gender;
 
     private String minister;
 }

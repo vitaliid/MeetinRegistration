@@ -3,7 +3,7 @@ package com.sdarm.meetingregistration.dto.participant;
 
 import com.sdarm.meetingregistration.dto.address.AddressResponse;
 import com.sdarm.meetingregistration.dto.payment.PaymentResponse;
-import com.sdarm.meetingregistration.enums.UserGender;
+import com.sdarm.meetingregistration.enums.ParticipantGender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class ParticipantResponse {
 
     private String email;
 
-    private UserGender gender;
+    private ParticipantGender gender;
 
     private String minister;
 
