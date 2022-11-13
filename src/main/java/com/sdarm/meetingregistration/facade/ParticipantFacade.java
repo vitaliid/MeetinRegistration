@@ -1,20 +1,17 @@
 package com.sdarm.meetingregistration.facade;
 
-import com.sdarm.meetingregistration.domain.Address;
-import com.sdarm.meetingregistration.domain.Field;
-import com.sdarm.meetingregistration.domain.Participant;
-import com.sdarm.meetingregistration.domain.Payment;
+import com.sdarm.meetingregistration.domain.*;
 import com.sdarm.meetingregistration.dto.participant.ParticipantCreateRequest;
 import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
 import com.sdarm.meetingregistration.mapper.ParticipantMapper;
-import com.sdarm.meetingregistration.service.AddressService;
-import com.sdarm.meetingregistration.service.FieldService;
-import com.sdarm.meetingregistration.service.ParticipantService;
-import com.sdarm.meetingregistration.service.PaymentService;
+import com.sdarm.meetingregistration.service.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +23,7 @@ public class ParticipantFacade {
     private final FieldService fieldService;
     private final AddressService addressService;
     private final PaymentService paymentService;
+    private final BedService bedService;
 
     public List<ParticipantResponse> getAll() {
         return participantService.getAll().stream()
@@ -39,6 +37,7 @@ public class ParticipantFacade {
                 .orElse(null);
     }
 
+    @Transactional
     public ParticipantResponse create(ParticipantCreateRequest request) {
         Participant participant = participantMapper.toEntity(request);
 
@@ -53,6 +52,16 @@ public class ParticipantFacade {
         Payment payment = participant.getPayment();
         paymentService.create(payment);
         participant.setPayment(payment);
+
+        if (StringUtils.isNotBlank(request.getBedId())) {
+            Bed bed = bedService.getById(request.getBedId())
+                    .orElseThrow(() -> new NoSuchElementException("There is no bed with such id: " + request.getBedId()));
+
+            participant.setBed(bed);
+            bed.setParticipant(participant);
+
+            bedService.update(bed);
+        }
 
         Participant created = participantService.create(participant);
         return participantMapper.toDto(created);

@@ -1,10 +1,12 @@
 package com.sdarm.meetingregistration.dto.bed;
 
 
-import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
+import com.sdarm.meetingregistration.dto.participant.ParticipantShortResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -17,5 +19,7 @@ public class BedResponse {
 
     private int level;
 
-    private ParticipantResponse participant;
+    private LocalDateTime bookingTime;
+
+    private ParticipantShortResponse participant;
 }

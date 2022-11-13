@@ -28,4 +28,7 @@ public class Participant extends IdHolder {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToOne(mappedBy = "participant")
+    private Bed bed;
 }
