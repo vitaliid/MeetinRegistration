@@ -1,1 +1,1 @@
-# MeetinRegistration
+# MeetingRegistration
