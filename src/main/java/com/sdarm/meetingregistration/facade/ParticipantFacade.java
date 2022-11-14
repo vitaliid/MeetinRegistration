@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -24,6 +26,9 @@ public class ParticipantFacade {
     private final AddressService addressService;
     private final PaymentService paymentService;
     private final BedService bedService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public List<ParticipantResponse> getAll() {
         return participantService.getAll().stream()
@@ -53,17 +58,21 @@ public class ParticipantFacade {
         paymentService.create(payment);
         participant.setPayment(payment);
 
+        Participant created = participantService.create(participant);
+
         if (StringUtils.isNotBlank(request.getBedId())) {
             Bed bed = bedService.getById(request.getBedId())
                     .orElseThrow(() -> new NoSuchElementException("There is no bed with such id: " + request.getBedId()));
 
-            participant.setBed(bed);
-            bed.setParticipant(participant);
+            entityManager.detach(bed);
 
+            bed.setBooking(request.getBooking());
+            bed.setParticipant(created);
             bedService.update(bed);
+
+            participant.setBed(bed);
         }
 
-        Participant created = participantService.create(participant);
         return participantMapper.toDto(created);
     }
 

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @Getter
 @Setter
@@ -19,7 +17,7 @@ public class BedResponse {
 
     private int level;
 
-    private LocalDateTime bookingTime;
+    private int booking;
 
     private ParticipantShortResponse participant;
 }

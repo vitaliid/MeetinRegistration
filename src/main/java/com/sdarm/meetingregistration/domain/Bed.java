@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,6 +24,6 @@ public class Bed extends IdHolder {
     private Participant participant;
 
     @Version
-    @Column(name = "booking_time")
-    private LocalDateTime bookingTime;
+    @Column(name = "booking")
+    private int booking;
 }

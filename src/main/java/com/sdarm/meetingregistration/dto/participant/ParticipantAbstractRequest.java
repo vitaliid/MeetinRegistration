@@ -17,5 +17,7 @@ public abstract class ParticipantAbstractRequest {
     private String minister;
 
     private String bedId;
+
+    private int booking;
 }
 
