@@ -7,6 +7,7 @@ import com.sdarm.meetingregistration.mapper.ParticipantMapper;
 import com.sdarm.meetingregistration.service.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,17 +61,25 @@ public class ParticipantFacade {
 
         Participant created = participantService.create(participant);
 
-        if (StringUtils.isNotBlank(request.getBedId())) {
-            Bed bed = bedService.getById(request.getBedId())
-                    .orElseThrow(() -> new NoSuchElementException("There is no bed with such id: " + request.getBedId()));
+        try {
+            if (StringUtils.isNotBlank(request.getBedId())) {
+                Bed bed = bedService.getById(request.getBedId())
+                        .orElseThrow(() -> new NoSuchElementException("There is no bed with such id: " + request.getBedId()));
 
-            entityManager.detach(bed);
+                if (bed.getParticipant() != null) {
+                    throw new ObjectOptimisticLockingFailureException("Specified bed is already booked", bed.getId());
+                }
 
-            bed.setBooking(request.getBooking());
-            bed.setParticipant(created);
-            bedService.update(bed);
+                entityManager.detach(bed);
 
-            participant.setBed(bed);
+                bed.setBooking(request.getBooking());
+                bed.setParticipant(created);
+                bedService.update(bed);
+
+                participant.setBed(bed);
+            }
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new IllegalArgumentException("It was not possible to book the apartment. Please update information and choose another one.");
         }
 
         return participantMapper.toDto(created);
