@@ -1,6 +1,5 @@
 package com.sdarm.meetingregistration.controller;
 
-import com.sdarm.meetingregistration.dto.participant.ParticipantCreateRequest;
 import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
 import com.sdarm.meetingregistration.facade.ParticipantFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -28,19 +27,11 @@ public class ParticipantController {
         return participantFacade.getAll();
     }
 
-
     @GetMapping("{id}")
     public ParticipantResponse getById(@PathVariable String id) {
         log.info("Get participant by id {}", id);
 
         return participantFacade.getById(id);
-    }
-
-    @PostMapping
-    public ParticipantResponse create(@RequestBody ParticipantCreateRequest request) {
-        log.info("Create participant");
-
-        return participantFacade.create(request);
     }
 
     @DeleteMapping("{id}")
