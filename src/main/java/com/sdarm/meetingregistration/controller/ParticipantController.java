@@ -3,6 +3,7 @@ package com.sdarm.meetingregistration.controller;
 import com.sdarm.meetingregistration.dto.participant.ParticipantResponse;
 import com.sdarm.meetingregistration.facade.ParticipantFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/registration/participants")
 @OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "participants")})
+@SecurityRequirement(name = "Bearer Authentication")
 @Slf4j
 @RequiredArgsConstructor
 public class ParticipantController {
