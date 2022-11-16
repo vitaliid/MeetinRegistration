@@ -1,7 +1,7 @@
 package com.sdarm.meetingregistration.controller;
 
-import com.sdarm.meetingregistration.dto.apartment.ApartmentResponse;
-import com.sdarm.meetingregistration.facade.ApartmentFacade;
+import com.sdarm.meetingregistration.dto.field.FieldResponse;
+import com.sdarm.meetingregistration.facade.FieldFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/registration/apartments")
-@OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "apartments")})
+@RequestMapping("api/public/registration/fields")
+@OpenAPIDefinition(tags = {@Tag(name = "public"), @Tag(name = "registration"), @Tag(name = "fields")})
 @Slf4j
 @RequiredArgsConstructor
-public class ApartmentController {
+public class PublicFieldController {
 
-    private final ApartmentFacade apartmentFacade;
+    private final FieldFacade fieldFacade;
 
     @GetMapping
-    public List<ApartmentResponse> getAll() {
-        log.info("Get all apartments");
+    public List<FieldResponse> get() {
+        log.info("Get all fields");
 
-        return apartmentFacade.getAll();
+        return fieldFacade.getAll();
     }
 }
