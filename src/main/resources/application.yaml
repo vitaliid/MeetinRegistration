@@ -22,3 +22,6 @@ logging:
   level:
     org:
       springframework: INFO
+
+application:
+  returnStackTraceOnError: false
