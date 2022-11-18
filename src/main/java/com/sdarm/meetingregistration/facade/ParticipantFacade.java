@@ -67,7 +67,7 @@ public class ParticipantFacade {
                         .orElseThrow(() -> new NoSuchElementException("There is no bed with such id: " + request.getBedId()));
 
                 if (bed.getParticipant() != null) {
-                    throw new ObjectOptimisticLockingFailureException("Specified bed is already booked", bed.getId());
+                    throw new ObjectOptimisticLockingFailureException("Specified bed is already booked by: " + bed.getParticipant().getId(), null);
                 }
 
                 entityManager.detach(bed);
@@ -79,7 +79,7 @@ public class ParticipantFacade {
                 participant.setBed(bed);
             }
         } catch (ObjectOptimisticLockingFailureException e) {
-            throw new IllegalArgumentException("It was not possible to book the apartment. Please update information and choose another one.");
+            throw new IllegalArgumentException("It was not possible to book the apartment. Please update information and choose another one.", e);
         }
 
         return participantMapper.toDto(created);
