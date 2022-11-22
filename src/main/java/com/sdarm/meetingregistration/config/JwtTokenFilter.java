@@ -1,5 +1,7 @@
 package com.sdarm.meetingregistration.config;
 
+import com.sdarm.meetingregistration.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -15,16 +17,10 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-  /*  private final JwtTokenUtil jwtTokenUtil;
-    private final UserRepo userRepo;
-
-    public JwtTokenFilter(JwtTokenUtil jwtTokenUtil,
-                          UserRepo userRepo) {
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userRepo = userRepo;
-    }*/
+    private final AuthService authService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -33,6 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         if (request.getRequestURI().contains("api/public")
+                || request.getRequestURI().contains("api/auth")
                 || request.getRequestURI().contains("swagger")
                 || request.getRequestURI().contains("api-docs")
                 || request.getRequestURI().contains("favicon.ico")) {
@@ -45,41 +42,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (isEmpty(header) || !header.startsWith("Bearer ")) {
             log.error("Not auth token in header");
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            //chain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         // Get jwt token and validate
         final String token = header.split(" ")[1].trim();
-        if (!token.equals("MAXIM_KALININ")) {
+        if (!authService.validateToken(token)) {
             log.error("Invalid token for simple auth");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            //chain.doFilter(request, response);
             return;
         }
-        /*if (!jwtTokenUtil.validate(token)) {
-            chain.doFilter(request, response);
-            return;
-        }*/
-
-        // Get user identity and set it on the spring security context
-      /*  UserDetails userDetails = userRepo
-                .findByUsername(jwtTokenUtil.getUsername(token))
-                .orElse(null);
-
-        UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null,
-                userDetails == null ?
-                        List.of() : userDetails.getAuthorities()
-        );
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);*/
 
         chain.doFilter(request, response);
     }

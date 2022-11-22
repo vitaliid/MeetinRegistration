@@ -23,5 +23,11 @@ logging:
     org:
       springframework: INFO
 
+
+jwt:
+  secret: meeting-registration-secret-key
+  login: Maxim_Kalinin_1977
+  password: cnfhjcnmythfljcnm
+
 application:
   returnStackTraceOnError: false

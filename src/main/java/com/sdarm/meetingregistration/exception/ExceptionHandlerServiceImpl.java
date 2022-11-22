@@ -34,8 +34,9 @@ public class ExceptionHandlerServiceImpl implements ExceptionHandlerService {
         return unknownExceptionHandler(exception, request, INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<Object> unknownExceptionHandler(Exception exception, HttpServletRequest request,
-                                                           HttpStatus httpStatus) {
+    @Override
+    public ResponseEntity<Object> unknownExceptionHandler(Exception exception, HttpServletRequest request,
+                                                          HttpStatus httpStatus) {
         String trace = returnStackTrace ? Stream.of(exception.getStackTrace())
                 .filter(e -> e.getClassName().startsWith(CORE_PACKAGE_NAME))
                 .map(Object::toString)
