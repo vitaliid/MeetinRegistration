@@ -85,7 +85,13 @@ public class ParticipantFacade {
         return participantMapper.toDto(created);
     }
 
+    @Transactional
     public void delete(String id) {
+        bedService.getByParticipant(id).ifPresent(bed -> {
+            bed.setParticipant(null);
+            bedService.update(bed);
+        });
+
         participantService.delete(id);
     }
 }

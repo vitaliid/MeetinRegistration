@@ -2,14 +2,24 @@ package com.sdarm.meetingregistration.service.impl;
 
 
 import com.sdarm.meetingregistration.domain.Bed;
+import com.sdarm.meetingregistration.repository.BedRepository;
 import com.sdarm.meetingregistration.service.BedService;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class BedServiceImpl extends CrudServiceImpl<Bed> implements BedService {
 
-    public BedServiceImpl(JpaRepository<Bed, String> repository) {
+    private final BedRepository bedRepository;
+
+    public BedServiceImpl(BedRepository repository) {
         super(repository);
+        bedRepository = repository;
+    }
+
+    @Override
+    public Optional<Bed> getByParticipant(String participantId) {
+        return bedRepository.findByParticipantId(participantId);
     }
 }
