@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/registration/participants")
 @OpenAPIDefinition(tags = {@Tag(name = "registration"), @Tag(name = "participants")})
