@@ -4,5 +4,5 @@ public interface AuthService {
 
     String auth(String username, String password);
 
-    Boolean validateToken(String token);
+    boolean validateToken(String token);
 }

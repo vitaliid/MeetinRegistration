@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Boolean validateToken(String token) {
+    public boolean validateToken(String token) {
         final String username = getUsernameFromToken(token);
         return (username.equals(login) && !isTokenExpired(token));
     }

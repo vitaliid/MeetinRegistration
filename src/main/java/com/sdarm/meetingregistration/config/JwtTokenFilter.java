@@ -1,6 +1,7 @@
 package com.sdarm.meetingregistration.config;
 
 import com.sdarm.meetingregistration.service.AuthService;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -48,9 +49,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // Get jwt token and validate
         final String token = header.split(" ")[1].trim();
-        if (!authService.validateToken(token)) {
-            log.error("Invalid token for simple auth");
+        try {
+            if (!authService.validateToken(token)) {
+                log.error("Invalid token for simple auth");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+        } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token is expired: " + e.getMessage());
             return;
         }
 
