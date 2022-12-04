@@ -4,8 +4,10 @@ import com.sdarm.meetingregistration.service.AuthService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Slf4j
+@Order(1)
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -35,6 +38,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 || request.getRequestURI().contains("api-docs")
                 || request.getRequestURI().contains("favicon.ico")) {
             log.info("Public endpoint access: {}", request.getRequestURI());
+            chain.doFilter(request, response);
+            return;
+        }
+
+        if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
             chain.doFilter(request, response);
             return;
         }
