@@ -18,7 +18,7 @@ public class ApartmentFacade {
     private final ApartmentService apartmentService;
     private final ApartmentMapper apartmentMapper;
 
-    public List<ApartmentResponse> getAll() {
+    public List<ApartmentResponse> getAll(boolean isAvailableOnly) {
         return apartmentService.getAll().stream()
                 .map(apartmentMapper::toDto)
                 .sorted(Comparator.comparing(ApartmentResponse::getNumber))
@@ -28,7 +28,16 @@ public class ApartmentFacade {
                             .collect(Collectors.toList()));
                     return apartmentResponse;
                 })
+                .filter(apartmentResponse -> {
 
+                    if (isAvailableOnly) {
+                        List<BedResponse> notAvailableBeds = apartmentResponse.getBeds().stream()
+                                .filter(bedResponse -> bedResponse.getParticipant() != null)
+                                .collect(Collectors.toList());
+                        apartmentResponse.getBeds().removeAll(notAvailableBeds);
+                        return !apartmentResponse.getBeds().isEmpty();
+                    } else return true;
+                })
                 .collect(Collectors.toList());
     }
 }

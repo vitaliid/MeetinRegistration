@@ -6,10 +6,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +21,9 @@ public class PublicApartmentController {
     private final ApartmentFacade apartmentFacade;
 
     @GetMapping
-    public List<ApartmentResponse> getAll() {
+    public List<ApartmentResponse> getAll(@RequestParam(value = "isAvailableOnly", required = false, defaultValue = "false") boolean isAvailableOnly) {
         log.info("Get all apartments");
 
-        return apartmentFacade.getAll();
+        return apartmentFacade.getAll(isAvailableOnly);
     }
 }
