@@ -2,7 +2,7 @@ package com.sdarm.meetingregistration.dto.participant;
 
 
 import com.sdarm.meetingregistration.dto.address.AddressResponse;
-import com.sdarm.meetingregistration.dto.bed.BedResponse;
+import com.sdarm.meetingregistration.dto.bed.ParticipantBedResponse;
 import com.sdarm.meetingregistration.dto.payment.PaymentResponse;
 import com.sdarm.meetingregistration.enums.ParticipantGender;
 import lombok.Getter;
@@ -28,5 +28,5 @@ public class ParticipantResponse {
 
     private AddressResponse address;
 
-    private BedResponse bed;
+    private ParticipantBedResponse bed;
 }
