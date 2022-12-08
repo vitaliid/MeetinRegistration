@@ -59,7 +59,12 @@ public class ParticipantFacade {
         paymentService.create(payment);
         participant.setPayment(payment);
 
-        Participant created = participantService.create(participant);
+        Participant created;
+        try {
+            created = participantService.create(participant);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("It is failed to register participant", e);
+        }
 
         try {
             if (StringUtils.isNotBlank(request.getBedId())) {
